@@ -17,16 +17,21 @@
 		 v-bind:genres="genres"
 		 @delete="remove"
 
-		 ></BookListTable>	
+		 >
+		
+		</BookListTable>
+
 </template>
 
 <script>
 	import BookListForm from '../components/BookListForm.vue'
 	import BookListTable from '../components/BookListTable.vue'
+	import EditForm from '../components/EditForm.vue'
+	
 
 	export default {
 		components:{
-			BookListForm, BookListTable
+			BookListForm, BookListTable, EditForm
 		},
 
 		data() {
@@ -37,6 +42,7 @@
 				year:'',
 				selectedIndex: null, 
 				genre:0,
+				activeBook: null,
 
 				genres:[
 					{
@@ -100,11 +106,11 @@
 
 			// по аргументу index,book переназначаем параметры переменных (ребенок-родитель)
 
-			edit (index, book) {
-				this.author= book.author;
-				this.name= book.name;
-				this.year= book.year;
-				this.genre= book.genre;
+			edit (index) {
+				// this.author= book.author;
+				// this.name= book.name;
+				// this.year= book.year;
+				// this.genre= book.genre;
 				this.selectedIndex = index
 				// console.log(index)
 
