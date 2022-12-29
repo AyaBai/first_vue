@@ -19,7 +19,7 @@
 						<td>{{book.year}}</td>
 						<td>{{getGenre(book.genre)}}</td>
 						<td>
-							<button class="btn" v-on:click="edit(index, book)">edit</button>
+							<button class="btn" v-on:click="edit(index)"> edit</button>
 							<!-- слушатель события на кнопке редактировать -->
 							<button class="btn" v-on:click="remove(index)">delete</button>
 							<!-- удаление -->
@@ -33,6 +33,7 @@
 
 <script>
 
+
 export default {
 	data() {
 		return {
@@ -42,6 +43,7 @@ export default {
 				year:'',
 				selectedIndex: null, 
 				genre:0
+
 			}
 		}
 	},
@@ -70,6 +72,9 @@ export default {
 				}
 				// на входе id, на выходе name жанра из списка жанров.
 			},
+			edit(index) {
+				this.$emit('edit', index)
+			}
 	}	
 }
 	
@@ -104,4 +109,5 @@ export default {
 		border: 1px solid dimgrey;
 		text-align: center;
 	}
-	</style>
+	
+</style>
