@@ -2,17 +2,31 @@
 	<div class="container">
 		<h1 class="title">To Do List</h1>
 		<div class="addlist">
-			<input class="input-t" type="text" placeholder="add task" v-model="value" >
-			<button class="add-btn" v-on:click="toDoList.push(value)">Add</button>
+			
+			<div v-if="!isEditing">
+				<input class="input-t" type="text" placeholder="add task" v-model="value" @keyup.enter="submit">
+				<button class="add-btn" v-on:click="create()">Add</button>
+			</div>
+
+			<div v-else>
+				<input class="input-t" type="text" placeholder="add task" v-model="value" >
+				<button class="add-btn" v-on:click="update()">update</button>
+			</div>
+
 		</div>
-		<div class="list">	
-			<ol>
-				<li v-for="task in toDoList">
-					<label><input class="input-c" type="checkbox" v-model="task.isDone">
-					{{task.name}}{{value}}</label>
-					<button class="bin"></button>
-				</li>				
-			</ol>
+
+<div class="list">	
+			
+				<ol>
+					<li v-for="(task, index) in toDoList" :key="index">
+						<label>
+							<!-- <input class="input-c" type="checkbox" v-model="task.isDone"> -->
+						{{task.name}}</label>
+						<button class="edit" v-on:click="editing(index,task.name)"></button>
+						<button class="bin" v-on:click="remove(index)"></button>
+					</li>				
+				</ol>
+			
 			<ul>
 				<li v-for="task in toDoList">{{task.name}} {{task.isDone}}</li>
 			</ul>
@@ -26,6 +40,8 @@
 		data() {
 			return {
 				value:'',
+				selectedIndex: null,
+				isEditing:false,
 				toDoList:[
 					{
 						name:'купить хлеб',
@@ -39,18 +55,42 @@
 			}
 		},
 		methods: {
-			update () {
-
-			},
-			delete() {
-
-			},
 			create () {
-				this.toDoList=this.value// взять данные для названия новой задачи, 
+				const toDo = {
+						name:this.value,
+						isDone:false,
+					};
+					this.toDoList.push(toDo) // взять данные для названия новой задачи, 
 				// создать обЪект по образцу элементов toDoList
 				// 
+				this.value=''
+
+			},
+
+			editing (index, value) {
+				this.value = value
+				this.selectedIndex = index
+				this.isEditing = true
+				
+
+			},
+
+			update () {
+				const toDo = {
+						name:this.value,
+						isDone:false,
+					};
+				this.toDoList.splice(this.selectedIndex, 1, toDo)
+				this.isEditing = false
+			},
+
+			remove (index) {
+
+				this.toDoList.splice(index,1)
+				// alert ('hello')
 
 			}
+			
 
 		}
 	}
@@ -111,13 +151,22 @@
 		margin-top: 15px;
 	}
 
-	.bin {
+	.bin, .edit {
 		width: 25px;
 		height: 25px;
 		background-repeat: no-repeat;
-		background-image: url(../img/bin.svg) ;
 		background-color: transparent;
 		border-color: transparent;
+		background-size: contain;
+	}
+
+	.edit {
+		background-image: url(../img/pencil.svg);
+		
+	}
+
+	.bin {
+		background-image: url(../img/bin.svg);
 	}
 
 	input:checked {
