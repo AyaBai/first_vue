@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <template>
 	<form @submit.prevent>
 		<div class="container">
