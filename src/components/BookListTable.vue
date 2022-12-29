@@ -105,4 +105,4 @@ export default {
 		border: 1px solid dimgrey;
 		text-align: center;
 	}
-	
+	</style>
